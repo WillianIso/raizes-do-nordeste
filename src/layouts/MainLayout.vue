@@ -11,10 +11,13 @@
         <RouterView />
       </v-container>
     </v-main>
-    
+
     <v-bottom-navigation>
       <v-btn to="/">
         Cardápio
+      </v-btn>
+      <v-btn to="/promocoes">
+        Promoções
       </v-btn>
     </v-bottom-navigation>
   </v-app>

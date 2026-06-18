@@ -5,6 +5,7 @@ import MainLayout from '../layouts/MainLayout.vue'
 import LoginView from '../views/LoginView.vue'
 import CadastroView from '../views/CadastroView.vue'
 import CardapioView from '../views/CardapioView.vue'
+import PromocoesView from '../views/PromocoesView.vue'
 
 
 const routes = [
@@ -27,6 +28,10 @@ const routes = [
       {
         path: '',
         component: CardapioView
+      },
+      {
+        path: 'promocoes',
+        component: PromocoesView
       },
     ],
   }
