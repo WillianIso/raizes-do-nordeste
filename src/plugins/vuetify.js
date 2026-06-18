@@ -8,4 +8,19 @@ import * as directives from 'vuetify/directives'
 export default createVuetify({
   components,
   directives,
+  theme: {
+    defaultTheme: 'light',
+    themes: {
+      light: {
+        colors: {
+          primary: '#1976D2',
+          secondary: '#424242',
+          success: '#4CAF50',
+          warning: '#FB8C00',
+          error: '#F44336',
+          background: '#F5F7FA'
+        }
+      }
+    }
+  }
 })

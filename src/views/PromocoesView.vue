@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Promoções</h1>
+    <h1 class="text-center">Promoções</h1>
     <v-row>
       <v-col cols="12" v-for="campanha in campanhas" :key="campanha.id">
         <v-alert type="success" class="mb-4" :title="campanha.titulo">
@@ -12,8 +12,8 @@
     </v-row>
     <v-row>
       <v-col cols="12" v-for="produto in produtos" :key="produto.id">
-        <v-card>
-          <v-img :src="produto.imagem" height="200" cover />
+        <CardPadrao>
+          <v-img :src="produto.imagem"  class="ma-2 imagem-arredondada"  />
           <v-card-title>
             {{ produto.nome }}
           </v-card-title>
@@ -43,7 +43,7 @@
               Aproveitar Oferta
             </v-btn>
           </v-card-actions>
-        </v-card>
+        </CardPadrao>
       </v-col>
 
     </v-row>
@@ -55,11 +55,13 @@ import { ref, onMounted } from 'vue'
 import { listarPromocoes } from '../services/promocaoService'
 import { listarCampanhas }  from '../services/campanhaService'
 import { useNotificacaoStore } from '../stores/notificacao'
+import { useCarrinhoStore } from '../stores/carrinho'
+import CardPadrao from '../components/CardPadrao.vue'
 
 const produtos = ref([])
 const campanhas = ref([])
-const notificacaoStore =
-  useNotificacaoStore()
+const notificacaoStore = useNotificacaoStore()
+const carrinhoStore = useCarrinhoStore()
 
 onMounted(async () => {
   produtos.value = await listarPromocoes()
@@ -67,6 +69,11 @@ onMounted(async () => {
 })
 
 function adicionar(produto) {
-  notificacaoStore.mostrar(`${produto.nome} adicionado ao carrinho`)
+  carrinhoStore.adicionar({
+    ...produto, 
+    preco: produto.emPromocao ? produto.precoPromocional : produto.preco
+  });
+
+  notificacaoStore.mostrar(`${produto.nome} adicionado ao carrinho!`, "Sucesso", "mdi-check-circle")
 }
 </script>

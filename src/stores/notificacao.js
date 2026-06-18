@@ -3,17 +3,17 @@ import { defineStore } from 'pinia'
 export const useNotificacaoStore = defineStore('notificacao', {
   state: () => ({
     visivel: false,
-    mensagem: ''
+    mensagem: '',
+    titulo: '',
+    icone: ''
   }),
 
   actions: {
-    mostrar(mensagem) {
+    mostrar(mensagem, titulo, icone) {
       this.mensagem = mensagem
+      this.titulo = titulo
+      this.icone = icone
       this.visivel = true
-
-      setTimeout(() => {
-        this.visivel = false
-      }, 2500)
     }
   }
 })

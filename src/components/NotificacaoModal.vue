@@ -1,10 +1,8 @@
 <template>
   <v-dialog v-model="store.visivel" width="400">
-    <v-card>
-      <v-card-title>
-        Notificação
-      </v-card-title>
-      <v-card-text>
+    <CardPadrao class="mx-auto" :prepend-icon="store.icone" :title="store.titulo" max-width="400">
+
+      <v-card-text class="text-justify">
         {{ store.mensagem }}
       </v-card-text>
       <v-card-actions>
@@ -13,13 +11,14 @@
           OK
         </v-btn>
       </v-card-actions>
-    </v-card>
+    </CardPadrao>
   </v-dialog>
 
 </template>
 
 <script setup>
 import { useNotificacaoStore } from '../stores/notificacao'
+import CardPadrao from './CardPadrao.vue'
 
 const store = useNotificacaoStore()
 </script>

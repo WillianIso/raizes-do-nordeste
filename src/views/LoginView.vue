@@ -1,17 +1,19 @@
 <template>
-  <v-container>
-    <v-card>
-      <v-card-title>
-        Login
+  <v-container class="d-flex flex-column align-center justify-center" style="height: 100vh;">
+    <CardPadrao class="mx-auto pa-4" style="width: 350px;">
+      <v-card-title class="text-h6 text-center">
+        Fazer Login
       </v-card-title>
 
       <v-card-text>
         <v-text-field
           label="E-mail"
+          variant="outlined"
           v-model="email"
         />
         <v-text-field
           label="Senha"
+          variant="outlined"
           type="password"
           v-model="senha"
         />
@@ -25,8 +27,8 @@
           Entrar
         </v-btn>
       </v-card-actions>
-    </v-card>
-    <div class="mt-4">
+    </CardPadrao>
+    <div class="mt-4 text-center">
         Ainda não tem uma conta?
         <router-link to="/cadastro">
           Cadastrar
@@ -39,6 +41,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import CardPadrao from '../components/CardPadrao.vue'
 
 const email = ref('')
 const senha = ref('')

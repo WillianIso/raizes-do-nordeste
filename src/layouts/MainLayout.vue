@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-app-bar>
-      <v-app-bar-title>
-        Lanchonete Raízes do Nordeste
+      <v-app-bar-title class="text-h6 text-center">
+        Raízes do Nordeste
       </v-app-bar-title>
     </v-app-bar>
 
@@ -18,6 +18,9 @@
       </v-btn>
       <v-btn to="/promocoes">
         Promoções
+      </v-btn>
+      <v-btn to="/carrinho">
+        Carrinho
       </v-btn>
     </v-bottom-navigation>
   </v-app>

@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-card>
+  <v-container class="d-flex flex-column align-center justify-center" >
+    <CardPadrao class="mx-auto" width="350">
       <v-card-title>
         Criar Conta
       </v-card-title>
@@ -32,7 +32,7 @@
               Li e concordo com os
               <a
                 href="#"
-                @click.prevent="mostrarTermos = true"
+                @click.prevent="mostrarNotificacaoTermoUso()"
               >
                 Termos de Uso
               </a>
@@ -48,7 +48,7 @@
               Autorizo o tratamento dos meus dados pessoais conforme a
               <a
                 href="#"
-                @click.prevent="mostrarLgpd = true"
+                @click.prevent="mostrarNotificacaoLgpd()"
               >
                 LGPD
               </a>
@@ -72,104 +72,13 @@
 
       </v-card-actions>
 
-    </v-card>
-    <div class="mt-4">
+    </CardPadrao>
+    <div class="mt-4 text-center">
       Já tem uma conta?
       <router-link to="/">
         Entrar
       </router-link>
     </div>
-
-    <v-dialog
-      v-model="mostrarTermos"
-      max-width="700"
-    >
-      <v-card>
-        <v-card-title>
-          Termos de Uso e Política de Privacidade
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Este aplicativo permite a realização de pedidos online
-            junto à lanchonete.
-          </p>
-          <p>
-            Ao utilizar a plataforma, você concorda em fornecer
-            informações verdadeiras e manter seus dados atualizados.
-          </p>
-          <p>
-            Seus dados serão utilizados exclusivamente para
-            identificação, processamento de pedidos, entrega
-            e comunicação relacionada aos serviços oferecidos.
-          </p>
-          <p>
-            Não compartilharemos seus dados com terceiros
-            sem base legal ou consentimento.
-          </p>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            @click="mostrarTermos = false"
-          >
-            Fechar
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog
-      v-model="mostrarLgpd"
-      max-width="700"
-    >
-      <v-card>
-        <v-card-title>
-          Tratamento de Dados Pessoais (LGPD)
-        </v-card-title>
-        <v-card-text>
-
-          <p>
-            Seus dados pessoais serão tratados de acordo com a
-            Lei nº 13.709/2018 (LGPD).
-          </p>
-          <p>
-            Os dados coletados poderão incluir:
-          </p>
-          <ul>
-            <li>Nome</li>
-            <li>E-mail</li>
-            <li>Telefone</li>
-            <li>Histórico de pedidos</li>
-          </ul>
-          <p>
-            Os dados serão utilizados para:
-          </p>
-          <ul>
-            <li>Processamento de pedidos</li>
-            <li>Entrega de produtos</li>
-            <li>Atendimento ao cliente</li>
-            <li>Comunicações autorizadas pelo usuário</li>
-          </ul>
-          <p>
-            Você poderá solicitar correção, exclusão ou acesso aos seus
-            dados a qualquer momento.
-          </p>
-
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            @click="mostrarLgpd = false"
-          >
-            Fechar
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-container>
 </template>
 
@@ -178,6 +87,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { cadastrar } from '../services/authService'
 import { useNotificacaoStore } from '../stores/notificacao'
+import CardPadrao from '../components/CardPadrao.vue'
 
 const router = useRouter()
 const notificacaoStore = useNotificacaoStore()
@@ -197,17 +107,17 @@ const mostrarLgpd = ref(false)
 function cadastrarUsuario() {
 
   if (!aceitouTermos.value) {
-    notificacaoStore.mostrar('Você precisa aceitar os Termos de Uso')
+    notificacaoStore.mostrar('Você precisa aceitar os Termos de Uso', "Atenção", "mdi-alert")
     return;
   }
 
   if (!aceitouLgpd.value) {
-    notificacaoStore.mostrar('Você precisa autorizar o tratamento dos dados')
+    notificacaoStore.mostrar('Você precisa autorizar o tratamento dos dados', "Atenção", "mdi-alert")
     return;
   }
 
   if (!nome.value || !email.value || !telefone.value || !senha.value) {
-    notificacaoStore.mostrar('Preencha todos os campos obrigatórios')
+    notificacaoStore.mostrar('Preencha todos os campos obrigatórios', "Atenção", "mdi-alert")
     return;
   }
 
@@ -224,5 +134,26 @@ function cadastrarUsuario() {
 
 
   router.push('/')
+}
+
+function mostrarNotificacaoTermoUso() {
+  notificacaoStore.mostrar(
+    'Ao aceitar os Termos de Uso, você concorda em fornecer informações verdadeiras e manter seus dados atualizados. ' +
+    'Seus dados serão utilizados exclusivamente para identificação, processamento de pedidos, entrega e comunicação ' +
+    'relacionada aos serviços oferecidos. Não compartilharemos seus dados com terceiros sem base legal ou consentimento.',
+    "Termos de Uso",
+    "mdi-file-document"
+  )
+}
+
+function mostrarNotificacaoLgpd() {
+  notificacaoStore.mostrar(
+    'Seus dados pessoais serão tratados de acordo com a Lei nº 13.709/2018 (LGPD). Os dados coletados poderão incluir: ' +
+    'Nome, E-mail, Telefone, Histórico de pedidos. Os dados serão utilizados para: Processamento de pedidos, ' +
+    'Entrega de produtos, Atendimento ao cliente, Comunicações autorizadas pelo usuário. Você poderá solicitar correção,' +
+    ' exclusão ou acesso aos seus dados a qualquer momento.',
+    "Tratamento de Dados Pessoais (LGPD)",
+    "mdi-file-document"
+  )
 }
 </script>
