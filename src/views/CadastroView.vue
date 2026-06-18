@@ -75,7 +75,7 @@
     </v-card>
     <div class="mt-4">
       Já tem uma conta?
-      <router-link to="/login">
+      <router-link to="/">
         Entrar
       </router-link>
     </div>
@@ -177,8 +177,10 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { cadastrar } from '../services/authService'
+import { useNotificacaoStore } from '../stores/notificacao'
 
 const router = useRouter()
+const notificacaoStore = useNotificacaoStore()
 
 const nome = ref('')
 const email = ref('')
@@ -195,17 +197,17 @@ const mostrarLgpd = ref(false)
 function cadastrarUsuario() {
 
   if (!aceitouTermos.value) {
-    alert('Você precisa aceitar os Termos de Uso')
+    notificacaoStore.mostrar('Você precisa aceitar os Termos de Uso')
     return;
   }
 
   if (!aceitouLgpd.value) {
-    alert('Você precisa autorizar o tratamento dos dados')
+    notificacaoStore.mostrar('Você precisa autorizar o tratamento dos dados')
     return;
   }
 
   if (!nome.value || !email.value || !telefone.value || !senha.value) {
-    alert('Preencha todos os campos obrigatórios')
+    notificacaoStore.mostrar('Preencha todos os campos obrigatórios')
     return;
   }
 
@@ -221,6 +223,6 @@ function cadastrarUsuario() {
     cadastrar(novoUsuario)
 
 
-  router.push('/login')
+  router.push('/')
 }
 </script>
