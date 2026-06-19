@@ -1,12 +1,12 @@
 <template>
   <v-container>
-    <h1 class="mb-4">
+    <h1 class="mb-4 text-center">
       Meus Pedidos
     </h1>
     <v-alert v-if="pedidos.length === 0" type="info">
       Nenhum pedido encontrado.
     </v-alert>
-    <v-card v-for="pedido in pedidos" :key="pedido.id" class="mb-4">
+    <CardPadrao v-for="pedido in pedidos" :key="pedido.id" class="mb-4">
       <v-card-title>
         Pedido #{{ pedido.id }}
       </v-card-title>
@@ -54,8 +54,16 @@
           Total:
           R$ {{ pedido.total.toFixed(2) }}
         </strong>
+        <p>
+          Pagamento:
+          {{ pedido.pagamento.status }}
+        </p>
+        <p>
+          Método:
+          {{ pedido.pagamento.metodo }}
+        </p>
       </v-card-text>
-    </v-card>
+    </CardPadrao>
   </v-container>
 </template>
 
@@ -63,6 +71,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { listarPedidos } from '../services/pedidoService'
+import CardPadrao from '../components/CardPadrao.vue'
 
 const authStore = useAuthStore()
 const pedidos = ref([])

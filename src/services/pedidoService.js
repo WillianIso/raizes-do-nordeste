@@ -2,7 +2,7 @@ import { useFidelidadeStore } from '../stores/fidelidade'
 
 const pedidos = []
 
-export async function criarPedido(usuario, itens, total) {
+export async function criarPedido(usuario, itens, total, metodo) {
 
   const pedido = {
     id: Date.now(),
@@ -10,7 +10,13 @@ export async function criarPedido(usuario, itens, total) {
     data: new Date(),
     status: 'RECEBIDO',
     itens: [...itens],
-    total
+    total,
+    pagamento: {
+      metodo: metodo.metodo,
+      status: metodo.codigo,
+      transacaoId: metodo.transacaoId,
+      data: metodo.data
+    },
   }
 
   pedidos.push(pedido)
@@ -26,6 +32,7 @@ export async function listarPedidos(usuarioId) {
 }
 
 function iniciarFluxoPedido(pedido) {
+  if (pedido.pagamento.status == 'PAGAMENTO APROVADO') {
     setTimeout(() => {
       pedido.status = 'EM_PREPARO'
     }, 1000)
@@ -46,6 +53,9 @@ function iniciarFluxoPedido(pedido) {
         )
       )
     }, 2000)
+  } else {
+    pedido.status = 'PAGAMENTO_RECUSADO'
+  }
 }
 
 export function contarPedidosEntregues(

@@ -9,6 +9,7 @@ import PromocoesView from '../views/PromocoesView.vue'
 import CarrinhoView from '../views/CarrinhoView.vue'
 import PerfilView from '../views/PerfilView.vue'
 import MeusPedidosView from '../views/MeusPedidosView.vue'
+import PagamentoView from '../views/PagamentoView.vue'
 
 const routes = [
  {
@@ -46,6 +47,10 @@ const routes = [
       {
         path: 'meus-pedidos',
         component: MeusPedidosView
+      },
+      {
+        path: 'pagamento',
+        component: PagamentoView
       }
     ],
   }
