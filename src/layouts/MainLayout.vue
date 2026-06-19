@@ -22,6 +22,9 @@
       <v-btn to="/carrinho">
         Carrinho
       </v-btn>
+      <v-btn to="/perfil">
+        Perfil
+      </v-btn>
     </v-bottom-navigation>
   </v-app>
 </template>

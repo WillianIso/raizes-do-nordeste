@@ -7,6 +7,7 @@ import CadastroView from '../views/CadastroView.vue'
 import CardapioView from '../views/CardapioView.vue'
 import PromocoesView from '../views/PromocoesView.vue'
 import CarrinhoView from '../views/CarrinhoView.vue'
+import PerfilView from '../views/PerfilView.vue'
 
 
 const routes = [
@@ -38,6 +39,10 @@ const routes = [
         path: 'carrinho',
         component: CarrinhoView
       },
+      {
+        path: 'perfil',
+        component: PerfilView
+      }
     ],
   }
 ]
