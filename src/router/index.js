@@ -8,7 +8,7 @@ import CardapioView from '../views/CardapioView.vue'
 import PromocoesView from '../views/PromocoesView.vue'
 import CarrinhoView from '../views/CarrinhoView.vue'
 import PerfilView from '../views/PerfilView.vue'
-
+import MeusPedidosView from '../views/MeusPedidosView.vue'
 
 const routes = [
  {
@@ -42,6 +42,10 @@ const routes = [
       {
         path: 'perfil',
         component: PerfilView
+      },
+      {
+        path: 'meus-pedidos',
+        component: MeusPedidosView
       }
     ],
   }

@@ -56,7 +56,7 @@
         </div>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="success" block>
+        <v-btn color="success" block @click="finalizarPedido()">
           Finalizar Pedido
         </v-btn>
       </v-card-actions>
@@ -70,11 +70,14 @@ import { useCarrinhoStore } from '../stores/carrinho'
 import { useFidelidadeStore } from '../stores/fidelidade'
 import { computed } from 'vue'
 import CardPadrao from '../components/CardPadrao.vue'
+import { criarPedido } from '../services/pedidoService'
+import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
 
 const carrinhoStore = useCarrinhoStore()
 const fidelidadeStore = useFidelidadeStore()
+const authStore = useAuthStore()
 
 const usarDesconto = computed({
   get: () => carrinhoStore.usarDesconto,
@@ -85,5 +88,15 @@ const usarRefrigerante = computed({
   get: () => carrinhoStore.incluirRefrigerante,
   set: value => carrinhoStore.setRefrigeranteUsado(value)
 })
+
+function finalizarPedido() {
+  criarPedido(
+    authStore.usuario,
+    carrinhoStore.itensComBeneficios,
+    carrinhoStore.total
+  )
+  carrinhoStore.limpar()
+  router.push('/meus-pedidos')
+}
 
 </script>
