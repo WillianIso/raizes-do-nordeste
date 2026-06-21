@@ -7,9 +7,6 @@
     <p>
       E-mail: {{ authStore.usuario?.email }}
     </p>
-    <p>
-      Perfil: {{ authStore.usuario?.perfil }}
-    </p>
 
     <CardPadrao>
       <v-card-title>

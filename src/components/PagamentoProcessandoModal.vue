@@ -1,9 +1,3 @@
-<script setup>
-import { usePagamentoStore } from '../stores/pagamento'
-
-const store = usePagamentoStore()
-</script>
-
 <template>
   <v-dialog
     v-model="store.carregando"
@@ -11,7 +5,7 @@ const store = usePagamentoStore()
   >
     <v-card class="text-center py-6">
       <v-card-title>
-        Processando pagamento
+        Processando Pagamento
       </v-card-title>
 
       <v-card-text>
@@ -27,3 +21,9 @@ const store = usePagamentoStore()
     </v-card>
   </v-dialog>
 </template>
+
+<script setup>
+import { usePagamentoStore } from '../stores/pagamento'
+
+const store = usePagamentoStore()
+</script>

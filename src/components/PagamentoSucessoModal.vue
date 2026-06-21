@@ -1,34 +1,11 @@
-<script setup>
-import { computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { usePagamentoStore } from '../stores/pagamento'
-
-const router = useRouter()
-const store = usePagamentoStore()
-
-const mostrar = computed({
-  get: () => Boolean(store.resultado && store.resultado.sucesso),
-  set: (value) => {
-    if (!value) {
-      store.resultado = null
-    }
-  }
-})
-
-function verPedidos() {
-  mostrar.value = false
-  router.push('/meus-pedidos')
-}
-</script>
-
 <template>
   <v-dialog
     v-model="mostrar"
     max-width="420"
   >
     <v-card>
-      <v-card-title class="text-success">
-        Pagamento aprovado
+      <v-card-title class="text-success text-center">
+        Pagamento Aprovado
       </v-card-title>
 
       <v-card-text>
@@ -52,3 +29,26 @@ function verPedidos() {
     </v-card>
   </v-dialog>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { usePagamentoStore } from '../stores/pagamento'
+
+const router = useRouter()
+const store = usePagamentoStore()
+
+const mostrar = computed({
+  get: () => Boolean(store.resultado && store.resultado.sucesso),
+  set: (value) => {
+    if (!value) {
+      store.resultado = null
+    }
+  }
+})
+
+function verPedidos() {
+  mostrar.value = false
+  router.push('/meus-pedidos')
+}
+</script>

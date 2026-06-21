@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 import MainLayout from '../layouts/MainLayout.vue'
 
@@ -56,7 +57,24 @@ const routes = [
   }
 ]
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+
+
+router.beforeEach((to) => {
+  const authStore = useAuthStore()
+
+  if (
+    to.matched.some(record => record.meta.requiresAuth) &&
+    !authStore.autenticado
+  ) {
+    return '/login'
+  }
+
+  return true
+})
+
+export default router

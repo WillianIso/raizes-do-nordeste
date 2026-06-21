@@ -1,72 +1,52 @@
 <template>
-  <v-container class="d-flex flex-column align-center justify-center" >
+  <v-container class="d-flex flex-column align-center justify-center">
+    <div class="mx-auto mb-4">
+      <v-img :src="logo" width="250" class="mx-auto" />
+    </div>
     <CardPadrao class="mx-auto" width="350">
-      <v-card-title>
+      <v-card-title class="text-h6 text-center">
         Criar Conta
       </v-card-title>
       <v-card-text>
-        <v-text-field
-          v-model="nome"
-          label="Nome Completo*"
-        />
-        <v-text-field
-          v-model="email"
-          label="E-mail*"
-          type="email"
-        />
+        <v-text-field v-model="nome" variant="outlined" label="Nome Completo*" />
+        <v-text-field v-model="email" variant="outlined" label="E-mail*" type="email" />
         <v-text-field
           v-model="telefone"
+          variant="outlined"
           label="Telefone*"
+          type="tel"
+          inputmode="numeric"
+          @input="aplicarMascaraTelefone"
         />
 
-        <v-text-field
-          v-model="senha"
-          label="Senha*"
-          type="password"
-        />
-        <v-checkbox
-          v-model="aceitouTermos"
-        >
+        <v-text-field v-model="senha" variant="outlined" label="Senha*" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1" type="password" />
+        <v-checkbox v-model="aceitouTermos">
           <template #label>
             <span>
               Li e concordo com os
-              <a
-                href="#"
-                @click.prevent="mostrarNotificacaoTermoUso()"
-              >
+              <a href="#" @click.prevent="mostrarNotificacaoTermoUso()">
                 Termos de Uso
               </a>
               e a Política de Privacidade
             </span>
           </template>
         </v-checkbox>
-        <v-checkbox
-          v-model="aceitouLgpd"
-        >
+        <v-checkbox v-model="aceitouLgpd">
           <template #label>
             <span>
               Autorizo o tratamento dos meus dados pessoais conforme a
-              <a
-                href="#"
-                @click.prevent="mostrarNotificacaoLgpd()"
-              >
+              <a href="#" @click.prevent="mostrarNotificacaoLgpd()">
                 LGPD
               </a>
             </span>
           </template>
         </v-checkbox>
-        <v-checkbox
-          v-model="aceitaOfertas"
-          label="Aceito receber ofertas por e-mail (opcional)"
-        />
+        <v-checkbox v-model="aceitaOfertas" label="Aceito receber ofertas por e-mail (opcional)" />
       </v-card-text>
 
       <v-card-actions>
-        <v-btn
-          color="primary"
-          block
-          @click="cadastrarUsuario"
-        >
+        <v-btn color="primary" block @click="cadastrarUsuario">
           Cadastrar
         </v-btn>
 
@@ -88,6 +68,7 @@ import { useRouter } from 'vue-router'
 import { cadastrar } from '../services/authService'
 import { useNotificacaoStore } from '../stores/notificacao'
 import CardPadrao from '../components/CardPadrao.vue'
+import logo from '../assets/logo.png'
 
 const router = useRouter()
 const notificacaoStore = useNotificacaoStore()
@@ -96,6 +77,7 @@ const nome = ref('')
 const email = ref('')
 const telefone = ref('')
 const senha = ref('')
+const show1 = ref(false)
 
 const aceitouTermos = ref(false)
 const aceitouLgpd = ref(false)
@@ -103,6 +85,27 @@ const aceitaOfertas = ref(false)
 
 const mostrarTermos = ref(false)
 const mostrarLgpd = ref(false)
+
+function aplicarMascaraTelefone(event) {
+  const apenasNumeros = event.target.value.replace(/\D/g, '').slice(0, 11)
+
+  if (apenasNumeros.length <= 2) {
+    telefone.value = apenasNumeros
+    return
+  }
+
+  if (apenasNumeros.length <= 6) {
+    telefone.value = `(${apenasNumeros.slice(0, 2)}) ${apenasNumeros.slice(2)}`
+    return
+  }
+
+  if (apenasNumeros.length <= 10) {
+    telefone.value = `(${apenasNumeros.slice(0, 2)}) ${apenasNumeros.slice(2, 6)}-${apenasNumeros.slice(6)}`
+    return
+  }
+
+  telefone.value = `(${apenasNumeros.slice(0, 2)}) ${apenasNumeros.slice(2, 7)}-${apenasNumeros.slice(7)}`
+}
 
 function cadastrarUsuario() {
 
@@ -130,10 +133,10 @@ function cadastrarUsuario() {
     aceitaOfertas: aceitaOfertas.value
   }
 
-    cadastrar(novoUsuario)
+  cadastrar(novoUsuario)
 
 
-  router.push('/')
+  router.push('/login')
 }
 
 function mostrarNotificacaoTermoUso() {

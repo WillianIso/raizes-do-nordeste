@@ -23,7 +23,7 @@
         </v-card-title>
 
         <v-card-text class="text-center">
-          <div class="qr-code mx-auto mb-4">
+          <div class="mx-auto mb-4">
             <v-img :src="qrcode" width="200" class="mx-auto" />
           </div>
 
@@ -56,9 +56,34 @@
         <v-card-text>
           <v-form @submit.prevent="confirmarPagamento">
             <v-text-field variant="outlined" v-model="cartao.nome" label="Nome no cartão" required />
-            <v-text-field variant="outlined" v-model="cartao.numero" label="Número do cartão" required />
-            <v-text-field variant="outlined" v-model="cartao.validade" label="Validade" placeholder="MM/AA" required />
-            <v-text-field variant="outlined" v-model="cartao.cvc" label="CVC" required />
+            <v-text-field
+              variant="outlined"
+              v-model="cartao.numero"
+              label="Número do cartão"
+              type="text"
+              inputmode="numeric"
+              @input="aplicarMascaraCartao"
+              required
+            />
+            <v-text-field
+              variant="outlined"
+              v-model="cartao.validade"
+              label="Validade"
+              placeholder="MM/AA"
+              type="text"
+              inputmode="numeric"
+              @input="aplicarMascaraValidade"
+              required
+            />
+            <v-text-field
+              variant="outlined"
+              v-model="cartao.cvc"
+              label="CVC"
+              type="text"
+              inputmode="numeric"
+              @input="aplicarMascaraCvc"
+              required
+            />
           </v-form>
         </v-card-text>
 
@@ -103,6 +128,26 @@ const cartao = ref({
   validade: '',
   cvc: ''
 })
+
+function aplicarMascaraCartao(event) {
+  const numeros = event.target.value.replace(/\D/g, '').slice(0, 16)
+  cartao.value.numero = numeros.replace(/(\d{4})(?=\d)/g, '$1 ').trim()
+}
+
+function aplicarMascaraValidade(event) {
+  const numeros = event.target.value.replace(/\D/g, '').slice(0, 4)
+
+  if (numeros.length <= 2) {
+    cartao.value.validade = numeros
+    return
+  }
+
+  cartao.value.validade = `${numeros.slice(0, 2)}/${numeros.slice(2)}`
+}
+
+function aplicarMascaraCvc(event) {
+  cartao.value.cvc = event.target.value.replace(/\D/g, '').slice(0, 4)
+}
 
 function abrirModalPorMetodo() {
   if (metodo.value === 'PIX') {

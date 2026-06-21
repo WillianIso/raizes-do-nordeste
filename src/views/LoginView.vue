@@ -1,5 +1,8 @@
 <template>
   <v-container class="d-flex flex-column align-center justify-center" style="height: 100vh;">
+    <div class="mx-auto mb-4">
+      <v-img :src="logo" width="300" class="mx-auto" />
+    </div>
     <CardPadrao class="mx-auto pa-4" style="width: 350px;">
       <v-card-title class="text-h6 text-center">
         Fazer Login
@@ -42,6 +45,8 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import CardPadrao from '../components/CardPadrao.vue'
+import { useNotificacaoStore } from '../stores/notificacao'
+import logo from '../assets/logo.png'
 
 const email = ref('')
 const senha = ref('')
@@ -49,11 +54,16 @@ const erro = ref('')
 
 const authStore = useAuthStore()
 const router = useRouter()
+const notificacaoStore = useNotificacaoStore()
 
 async function entrar() {
   erro.value = ''
 
   try {
+    if (!email.value || !senha.value) {
+      notificacaoStore.mostrar('Por favor, preencha e-mail e/ou senha.')
+      return
+    }
     await authStore.login(email.value, senha.value)
 
     router.push('/')

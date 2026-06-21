@@ -27,11 +27,25 @@
         )
           ">
           <v-stepper-header>
+            <v-stepper-item
+              :value="1"
+              :title="pedido.status == 'RECEBIDO' ? 'Recebido' : ''"
+            />
 
-            <v-stepper-item :value="1" title="Recebido" />
-            <v-stepper-item :value="2" title="Preparo" />
-            <v-stepper-item :value="3" title="Entrega" />
-            <v-stepper-item :value="4" title="Concluído" />
+            <v-stepper-item
+              :value="2"
+              :title="pedido.status == 'EM_PREPARO' ? 'Em Preparo' : ''"
+            />
+
+            <v-stepper-item
+              :value="3"
+              :title="pedido.status == 'SAIU_PARA_ENTREGA' ? 'Entrega' : ''"
+            />
+
+            <v-stepper-item
+              :value="4"
+              :title="pedido.status == 'ENTREGUE' ? 'Concluído' : ''"
+            />
           </v-stepper-header>
         </v-stepper>
         <v-divider class="my-4" />

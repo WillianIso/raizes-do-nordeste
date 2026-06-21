@@ -34,12 +34,16 @@ export async function listarPedidos(usuarioId) {
 function iniciarFluxoPedido(pedido) {
   if (pedido.pagamento.status == 'PAGAMENTO APROVADO') {
     setTimeout(() => {
+      pedido.status = 'RECEBIDO'
+    }, 5000)
+
+    setTimeout(() => {
       pedido.status = 'EM_PREPARO'
-    }, 1000)
+    }, 5000)
 
     setTimeout(() => {
       pedido.status = 'SAIU_PARA_ENTREGA'
-    }, 1000)
+    }, 10000)
 
     setTimeout(() => {
       pedido.status = 'ENTREGUE'
@@ -52,7 +56,7 @@ function iniciarFluxoPedido(pedido) {
           pedido.usuarioId
         )
       )
-    }, 2000)
+    }, 25000)
   } else {
     pedido.status = 'PAGAMENTO_RECUSADO'
   }
