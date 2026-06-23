@@ -45,7 +45,7 @@ npm install
 # Iniciar servidor local
 npm run dev
 
-### Passo 1: Clonar o Repositório
+### Clonar o Repositório
 Abra o seu terminal (Prompt de Comando, Git Bash ou terminal do VS Code) e execute:
 
 git clone [https://github.com/WillianIso/raizes-do-nordeste.git](https://github.com/WillianIso/raizes-do-nordeste.git)
