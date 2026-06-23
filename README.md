@@ -16,18 +16,6 @@ Este repositório contém a entrega técnica da solução digital desenvolvida p
 
 ---
 
-## 🚀 Recursos Implementados / Simulados
-
-O sistema foi estruturado com base em requisitos funcionais (RF) e não funcionais (RNF) obrigatórios:
-
-* **RF01 - Cadastro & LGPD:** Tela de criação de conta com caixas de consentimento explícito para conformidade com a LGPD.
-* **RF03 - Cardápio Regionalizado:** Filtro dinâmico por unidade de atendimento (Ex: Juiz de Fora - Centro).
-* **RF04 - Carrinho Dinâmico:** Adição, alteração de quantidades e inserção de observações de customização nos itens.
-* **RF05 - Checkout & Gateway:** Simulação visual completa do fluxo de pagamento (Pix com tempo limite, Cartão de Crédito e rotinas presenciais para Totem).
-* **RNF03 - Feedback Visual:** Tratamento amigável e alertas visuais destacados em caso de falhas ou recusas de pagamento.
-
----
-
 ## 🛠️ Tecnologias Utilizadas
 
 * **HTML5** & **CSS3** (Estruturação e estilização avançada)
