@@ -32,7 +32,7 @@ O sistema foi estruturado com base em requisitos funcionais (RF) e não funciona
 
 * **HTML5** & **CSS3** (Estruturação e estilização avançada)
 * **JavaScript (ES6+)** (Manipulação dinâmica do DOM, carrinho e simulações do gateway)
-* ***Vite**
+* **Vite** | **VUE**
 
 ---
 
