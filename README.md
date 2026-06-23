@@ -18,19 +18,19 @@ Este repositório contém a entrega técnica da solução digital desenvolvida p
 
 ## Tecnologias Utilizadas
 
-* **HTML5** & **CSS3** (Estruturação e estilização avançada)
+* **Vuetify** (Estruturação e estilização avançada)
 * **JavaScript (ES6+)** (Manipulação dinâmica do DOM, carrinho e simulações do gateway)
 * **Vite** | **VUE**
 
 ---
 
-## Como Rodar o Programa Localmente
+# Como Rodar o Programa Localmente
 
 Siga os passos abaixo para clonar o repositório e executar a aplicação na sua máquina:
 
-# Instalar dependências
+## Instalar dependências
 npm install
-# Iniciar servidor local
+## Iniciar servidor local
 npm run dev
 
 ### Clonar o Repositório
