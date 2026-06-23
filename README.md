@@ -40,7 +40,12 @@ O sistema foi estruturado com base em requisitos funcionais (RF) e não funciona
 
 Siga os passos abaixo para clonar o repositório e executar a aplicação na sua máquina:
 
+# Instalar dependências
+npm install
+# Iniciar servidor local
+npm run dev
+
 ### Passo 1: Clonar o Repositório
 Abra o seu terminal (Prompt de Comando, Git Bash ou terminal do VS Code) e execute:
-```bash
+
 git clone [https://github.com/WillianIso/raizes-do-nordeste.git](https://github.com/WillianIso/raizes-do-nordeste.git)
