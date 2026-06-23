@@ -61,7 +61,7 @@ async function entrar() {
 
   try {
     if (!email.value || !senha.value) {
-      notificacaoStore.mostrar('Por favor, preencha e-mail e/ou senha.')
+      notificacaoStore.mostrar('Por favor, preencha e-mail e/ou senha.', 'Atenção', 'mdi-alert')
       return
     }
     await authStore.login(email.value, senha.value)

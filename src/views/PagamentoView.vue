@@ -7,6 +7,7 @@
       <v-radio label="Cartão de Crédito" value="CARTAO_CREDITO" />
       <v-radio label="Cartão de Débito" value="CARTAO_DEBITO" />
       <v-radio label="Dinheiro" value="DINHEIRO" />
+      <v-radio label="Pagar no Caixa" value="CAIXA" />
     </v-radio-group>
 
     <v-btn color="success" block @click="confirmarPagamento">
@@ -30,14 +31,24 @@
           <div class="text-caption text-medium-emphasis">
             Chave PIX
           </div>
-          <div class="font-weight-medium">
-            raizesnordestelanches@gmail.com
+
+          <div class="d-flex align-center justify-center ga-2 font-weight-medium">
+            <span>{{ pixKey }}</span>
+
+            <v-btn icon size="small" @click="copiarPix">
+              <v-icon>mdi-content-copy</v-icon>
+            </v-btn>
+          </div>
+
+          <!-- Timer -->
+          <div class="mt-4 text-error font-weight-medium">
+            Expira em: {{ tempoFormatado }}
           </div>
         </v-card-text>
 
         <v-card-actions>
           <v-spacer />
-          <v-btn color="secondary" @click="modalPix = false">
+          <v-btn color="secondary" @click="fecharModal">
             Cancelar
           </v-btn>
           <v-btn color="primary" @click="confirmarPagamento">
@@ -56,34 +67,12 @@
         <v-card-text>
           <v-form @submit.prevent="confirmarPagamento">
             <v-text-field variant="outlined" v-model="cartao.nome" label="Nome no cartão" required />
-            <v-text-field
-              variant="outlined"
-              v-model="cartao.numero"
-              label="Número do cartão"
-              type="text"
-              inputmode="numeric"
-              @input="aplicarMascaraCartao"
-              required
-            />
-            <v-text-field
-              variant="outlined"
-              v-model="cartao.validade"
-              label="Validade"
-              placeholder="MM/AA"
-              type="text"
-              inputmode="numeric"
-              @input="aplicarMascaraValidade"
-              required
-            />
-            <v-text-field
-              variant="outlined"
-              v-model="cartao.cvc"
-              label="CVC"
-              type="text"
-              inputmode="numeric"
-              @input="aplicarMascaraCvc"
-              required
-            />
+            <v-text-field variant="outlined" v-model="cartao.numero" label="Número do cartão" type="text"
+              inputmode="numeric" @input="aplicarMascaraCartao" required />
+            <v-text-field variant="outlined" v-model="cartao.validade" label="Validade" placeholder="MM/AA" type="text"
+              inputmode="numeric" @input="aplicarMascaraValidade" required />
+            <v-text-field variant="outlined" v-model="cartao.cvc" label="CVC" type="text" inputmode="numeric"
+              @input="aplicarMascaraCvc" required />
           </v-form>
         </v-card-text>
 
@@ -102,7 +91,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, onBeforeUnmount, computed } from 'vue'
 import { processarPagamento } from '../services/pagamentoService.js'
 import { criarPedido } from '../services/pedidoService.js'
 import { usePagamentoStore } from '../stores/pagamento.js'
@@ -122,11 +111,33 @@ const authStore = useAuthStore()
 
 const modalPix = ref(false)
 const modalCartao = ref(false)
+const pixKey = ref('raizesnordestelanches@gmail.com')
+const tempoRestante = ref(60) // 1 minuto
+let interval = null
+
 const cartao = ref({
   nome: '',
   numero: '',
   validade: '',
   cvc: ''
+})
+
+const tempoFormatado = computed(() => {
+  const min = String(Math.floor(tempoRestante.value / 60)).padStart(2, '0')
+  const seg = String(tempoRestante.value % 60).padStart(2, '0')
+  return `${min}:${seg}`
+})
+
+watch(modalPix, (novo) => {
+  if (novo) {
+    iniciarTimer()
+  } else {
+    clearInterval(interval)
+  }
+})
+
+onBeforeUnmount(() => {
+  clearInterval(interval)
 })
 
 function aplicarMascaraCartao(event) {
@@ -168,7 +179,7 @@ async function confirmarPagamento() {
   pagamentoStore.finalizar(resultado)
 
   if (!resultado.sucesso) {
-    notificacaoStore.mostrar(resultado.mensagem)
+    notificacaoStore.mostrar(resultado.mensagem, 'Erro', 'mdi-close-circle')
     return
   }
 
@@ -190,5 +201,32 @@ function selecionarMetodo() {
   }
 
   abrirModalPorMetodo()
+}
+
+function copiarPix() {
+  navigator.clipboard.writeText(pixKey.value)
+}
+
+function iniciarTimer() {
+  clearInterval(interval)
+  tempoRestante.value = 60
+
+  interval = setInterval(() => {
+    tempoRestante.value--
+
+    if (tempoRestante.value <= 0) {
+      expirarPix()
+    }
+  }, 1000)
+}
+
+function expirarPix() {
+  clearInterval(interval)
+  modalPix.value = false
+}
+
+function fecharModal() {
+  clearInterval(interval)
+  modalPix.value = false
 }
 </script>

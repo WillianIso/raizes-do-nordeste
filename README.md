@@ -10,13 +10,13 @@ Este repositório contém a entrega técnica da solução digital desenvolvida p
 
 ---
 
-## 👤 Desenvolvedor
+## Desenvolvedor
 * **Nome:** Willian Iso da Silva
 * **Curso:** Tecnologia em Análise e Desenvolvimento de Sistemas (UNINTER)
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 * **HTML5** & **CSS3** (Estruturação e estilização avançada)
 * **JavaScript (ES6+)** (Manipulação dinâmica do DOM, carrinho e simulações do gateway)
@@ -24,7 +24,7 @@ Este repositório contém a entrega técnica da solução digital desenvolvida p
 
 ---
 
-## 💻 Como Rodar o Programa Localmente
+## Como Rodar o Programa Localmente
 
 Siga os passos abaixo para clonar o repositório e executar a aplicação na sua máquina:
 
